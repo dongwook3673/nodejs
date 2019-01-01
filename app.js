@@ -8,9 +8,13 @@ const productRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
 
 mongoose.connect(
-    "mongodb+srv://dongwook:dongwook@cluster0-zy7je.mongodb.net/test?retryWrites=true", {
-    }
+    "mongodb://dongwook:dongwook1@ds145704.mlab.com:45704/node-rest-shop",
+    { useNewUrlParser: true}
 );
+
+mongoose.Promise = global.Promise;
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use('/products', productRoutes);
 app.use('/orders', ordersRoutes);
