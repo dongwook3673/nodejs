@@ -3,6 +3,13 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const upload = multer();
+
+
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 
 const productRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
@@ -13,6 +20,7 @@ mongoose.connect(
 );
 
 mongoose.Promise = global.Promise;
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
@@ -39,9 +47,7 @@ app.use((error, req, res, next) =>{
 //     });
 // });
 
-app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
+
 
 // app.use((req,res,next) =>{
 //     res.header('Access-Control-Allow-Origin', '*');
